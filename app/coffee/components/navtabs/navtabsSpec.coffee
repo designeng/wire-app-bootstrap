@@ -17,6 +17,8 @@ define ->
             template: {$ref: 'navtabsView'}
             search: { $ref: 'dom.first!.search', at: 'navtabsView' }
             basket: { $ref: 'dom.first!.basket', at: 'navtabsView' }
+            searchPanel: { $ref: 'dom.first!.searchPanel', at: 'navtabsView' }
+            basketPanel: { $ref: 'dom.first!.basketPanel', at: 'navtabsView' }
 
         specRouter:
             routes:
@@ -31,5 +33,11 @@ define ->
                 module: "css!components/navtabs/navtabs.css"
         insert:
             after: 'root'
+
+    autocompliteForm:
+        wire:
+            spec: "components/autocomplete/spec"
+            provide:
+                searchPage: {$ref: "navtabsController.searchPanel"}
 
 

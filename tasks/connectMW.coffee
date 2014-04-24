@@ -7,18 +7,16 @@ ConnectMW.folderMount = (connect, point) ->
 
 # "service/stub"
 ConnectMW.stubService = (req, res, next) ->
-    if (req.url).match new RegExp("service/stub")
+    if (req.url).match new RegExp("service/autocomplete")
 
-        console.log "-----------stub request-------------"
-        console.log "REQUEST URL:", req.url
-
-        params = require('url').parse(req.url, true).query
-        console.log "PARAMS:", params
-        console.log "-----------/end request-------------"
-
+        airports = ["Moscow", "Paris", "Tokio", "Rome", "London" ]
+        id = 0
         body = 
-            europe: 
-                towns: ["Moscow", "Paris"]
+            airports: []
+
+        for port in airports
+            body.airports.push {id: id, port: port}
+            id++
 
         res.setHeader "Content-Type", "application/json; charset=utf-8"
         res.write JSON.stringify body

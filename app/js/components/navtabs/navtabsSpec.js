@@ -17,6 +17,14 @@ define(function() {
         basket: {
           $ref: 'dom.first!.basket',
           at: 'navtabsView'
+        },
+        searchPanel: {
+          $ref: 'dom.first!.searchPanel',
+          at: 'navtabsView'
+        },
+        basketPanel: {
+          $ref: 'dom.first!.basketPanel',
+          at: 'navtabsView'
         }
       },
       specRouter: {
@@ -37,6 +45,16 @@ define(function() {
       },
       insert: {
         after: 'root'
+      }
+    },
+    autocompliteForm: {
+      wire: {
+        spec: "components/autocomplete/spec",
+        provide: {
+          searchPage: {
+            $ref: "navtabsController.searchPanel"
+          }
+        }
       }
     }
   };
