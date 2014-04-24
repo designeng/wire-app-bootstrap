@@ -2,18 +2,18 @@ define(function() {
   return {
     $plugins: ['wire/debug', 'wire/on', 'wire/dom', 'wire/dom/render', 'wire/connect', 'cola'],
     $exports: {
-      $ref: 'autocompleteController'
+      $ref: 'autocompleteFormController'
     },
-    autocompleteController: {
+    autocompleteFormController: {
       create: "components/autocomplete/controller",
       connect: {
         'testsCollection.onEdit': 'onItemClick'
       }
     },
-    autocompleteView: {
+    autocompleteFormView: {
       render: {
         template: {
-          module: "text!components/autocomplete/template.html"
+          module: "text!components/autocomplete/form.html"
         },
         css: {
           module: "css!components/autocomplete/styles.css"
@@ -22,6 +22,24 @@ define(function() {
       insert: {
         at: {
           $ref: 'searchPage'
+        }
+      }
+    },
+    autocompleteListView: {
+      render: {
+        template: {
+          module: "text!components/autocomplete/list/template.html"
+        },
+        css: {
+          module: "css!components/autocomplete/list/styles.css"
+        }
+      },
+      insert: {
+        at: {
+          $ref: 'dom.first!.listWrapper',
+          at: {
+            $ref: 'autocompleteFormView'
+          }
         }
       },
       on: {
@@ -37,7 +55,17 @@ define(function() {
       }
     },
     listCollection: {
-      wire: "components/autocomplete/collection/colSpec"
+      wire: "components/autocomplete/list/collection/colSpec"
+    },
+    inputOne: {
+      render: {
+        template: {
+          module: "text!components/autocomplete/input/template.html"
+        },
+        css: {
+          module: "css!components/autocomplete/input/styles.css"
+        }
+      }
     }
   };
 });
