@@ -2,10 +2,14 @@ define(function() {
   return {
     $plugins: ['wire/debug', 'wire/on', 'wire/dom', 'wire/dom/render', 'cola'],
     $exports: {
-      $ref: 'calendarController'
+      $ref: 'calendarController',
+      $ref: 'calendarView'
     },
     calendarController: {
       create: "components/calendar/controller"
+    },
+    source: {
+      create: "components/calendar/monthCollectionSource"
     },
     monthCollection: {
       create: {
@@ -17,9 +21,6 @@ define(function() {
         }
       }
     },
-    source: {
-      create: "components/calendar/monthCollectionSource"
-    },
     calendarView: {
       render: {
         template: {
@@ -27,11 +28,11 @@ define(function() {
         },
         css: {
           module: "css!components/calendar/styles.css"
-        },
-        insert: {
-          at: {
-            $ref: 'calendarPage'
-          }
+        }
+      },
+      insert: {
+        at: {
+          $ref: 'calendarPage'
         }
       }
     },
