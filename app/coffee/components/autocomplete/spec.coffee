@@ -15,9 +15,15 @@ define ->
 
     autocompleteFormController:
         create: "components/autocomplete/controller"
+        properties:
+            input: {$ref: 'input'}
+            list: {$ref: 'list'}
+        ready:
+            "bindKeyUp": {}
         connect:
             'testsCollection.onEdit': 'onItemClick'
 
+    # wrapper for input and list
     autocompleteFormView:
         render:
             template:
@@ -28,7 +34,7 @@ define ->
         insert:
             at: {$ref: 'searchPage'}
 
-    autocompleteListView:
+    list:
         render:
             template:
                 module: "text!components/autocomplete/list/template.html"
@@ -47,12 +53,12 @@ define ->
     listCollection:
         wire: "components/autocomplete/list/collection/colSpec"
 
-    inputOne: 
+    input: 
         render:
             template:
                 module: "text!components/autocomplete/input/template.html"
             css:
-                module: "css!components/autocomplete/input/styles.css"
-        # insert:
-        #     at: {$ref: 'searchPage'}
+                module: "css!components/autocomplete/input/style.css"
+        insert:
+            at: {$ref: 'dom.first!.inputWrapper', at: {$ref: 'autocompleteFormView'}}
 

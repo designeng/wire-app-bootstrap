@@ -25,6 +25,10 @@ define(function() {
         basketPanel: {
           $ref: 'dom.first!.basketPanel',
           at: 'navtabsView'
+        },
+        calendar: {
+          $ref: 'dom.first!.calendar',
+          at: 'navtabsView'
         }
       },
       specRouter: {
@@ -53,6 +57,16 @@ define(function() {
         provide: {
           searchPage: {
             $ref: "navtabsController.searchPanel"
+          }
+        }
+      }
+    },
+    calendar: {
+      wire: {
+        spec: "components/calendar/spec",
+        provide: {
+          calendarPage: {
+            $ref: "navtabsController.calendar"
           }
         }
       }

@@ -6,6 +6,17 @@ define(function() {
     },
     autocompleteFormController: {
       create: "components/autocomplete/controller",
+      properties: {
+        input: {
+          $ref: 'input'
+        },
+        list: {
+          $ref: 'list'
+        }
+      },
+      ready: {
+        "bindKeyUp": {}
+      },
       connect: {
         'testsCollection.onEdit': 'onItemClick'
       }
@@ -25,7 +36,7 @@ define(function() {
         }
       }
     },
-    autocompleteListView: {
+    list: {
       render: {
         template: {
           module: "text!components/autocomplete/list/template.html"
@@ -57,13 +68,21 @@ define(function() {
     listCollection: {
       wire: "components/autocomplete/list/collection/colSpec"
     },
-    inputOne: {
+    input: {
       render: {
         template: {
           module: "text!components/autocomplete/input/template.html"
         },
         css: {
-          module: "css!components/autocomplete/input/styles.css"
+          module: "css!components/autocomplete/input/style.css"
+        }
+      },
+      insert: {
+        at: {
+          $ref: 'dom.first!.inputWrapper',
+          at: {
+            $ref: 'autocompleteFormView'
+          }
         }
       }
     }

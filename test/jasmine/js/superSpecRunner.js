@@ -46,6 +46,10 @@ require.config({
       main: "underscore.string",
       location: "../../bower_components/underscore.string/lib"
     }, {
+      name: "moment",
+      main: "moment",
+      location: "../../bower_components/moment"
+    }, {
       name: "marionette",
       main: "backbone.marionette",
       location: "../../bower_components/marionette/lib/core/amd"

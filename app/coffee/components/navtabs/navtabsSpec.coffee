@@ -19,6 +19,8 @@ define ->
             basket: { $ref: 'dom.first!.basket', at: 'navtabsView' }
             searchPanel: { $ref: 'dom.first!.searchPanel', at: 'navtabsView' }
             basketPanel: { $ref: 'dom.first!.basketPanel', at: 'navtabsView' }
+            
+            calendar: { $ref: 'dom.first!.calendar', at: 'navtabsView' }
 
         specRouter:
             routes:
@@ -39,5 +41,13 @@ define ->
             spec: "components/autocomplete/spec"
             provide:
                 searchPage: {$ref: "navtabsController.searchPanel"}
+
+    # calendar test
+    calendar:
+        wire:
+            spec: "components/calendar/spec"
+            provide:
+                calendarPage: {$ref: "navtabsController.calendar"}
+
 
 

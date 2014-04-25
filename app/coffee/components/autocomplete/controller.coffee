@@ -1,5 +1,15 @@
-define ->
-	class AutoCompleteController
+define ["jquery"], ($) ->
+    class AutoCompleteController
 
-		onItemClick: (item) ->
-			console.log "___onItemClick"
+        # @injected
+        input: undefined
+
+        # @injected
+        list: undefined
+
+        onItemClick: (item) ->
+            console.log "____click"
+
+        bindKeyUp: ->
+            $(@input).keyup (e) ->
+                console.log e.target.value
