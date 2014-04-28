@@ -1,6 +1,6 @@
 define(function() {
   return {
-    $plugins: ['wire/debug', 'cola'],
+    $plugins: ['cola'],
     $exports: {
       $ref: 'collection'
     },

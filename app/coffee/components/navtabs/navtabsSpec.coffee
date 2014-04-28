@@ -21,6 +21,7 @@ define ->
             basketPanel: { $ref: 'dom.first!.basketPanel', at: 'navtabsView' }
             
             calendar: { $ref: 'dom.first!.calendar', at: 'navtabsView' }
+            packresponse: { $ref: 'dom.first!.passengers', at: 'navtabsView' }
 
         specRouter:
             routes:
@@ -48,6 +49,13 @@ define ->
             spec: "components/calendar/spec"
             provide:
                 calendarPage: {$ref: "navtabsController.calendar"}
+
+    # pack response test
+    calendar:
+        wire:
+            spec: "components/packresponse/spec"
+            provide:
+                packresponsePage: {$ref: "navtabsController.packresponse"}
 
 
 

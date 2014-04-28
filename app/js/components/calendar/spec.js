@@ -1,6 +1,6 @@
 define(function() {
   return {
-    $plugins: ['wire/debug', 'wire/on', 'wire/dom', 'wire/dom/render', 'cola'],
+    $plugins: ['wire/on', 'wire/dom', 'wire/dom/render', 'cola'],
     $exports: {
       $ref: 'calendarController',
       $ref: 'calendarView'
