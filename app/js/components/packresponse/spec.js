@@ -15,17 +15,11 @@ define(function() {
         },
         _updateForm: {
           $ref: 'form.setValues'
-        },
-        passengerModel: {
-          $ref: 'passengerModel'
         }
-      },
-      ready: {
-        'mapModelToView': {}
       }
     },
-    passengerModel: {
-      wire: "components/packresponse/model/modelSpec"
+    passengerCollection: {
+      wire: "components/packresponse/collection/collectionSpec"
     },
     passengerView: {
       render: {
@@ -40,11 +34,12 @@ define(function() {
       },
       bind: {
         to: {
-          $ref: 'passengerModel'
+          $ref: 'passengerCollection'
         },
         bindings: {
           firstName: '.firstName',
-          lastName: '.lastName'
+          lastName: '.lastName',
+          birthDate: '.birthDate'
         }
       }
     },

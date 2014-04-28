@@ -8,11 +8,8 @@ define(function() {
     PassengerController.prototype._form = void 0;
 
     PassengerController.prototype.mapModelToView = function() {
-      var _this = this;
-      console.log("____mapModelToView", this.passengerModel, this.form);
-      setTimeout(function() {
-        return _this._updateForm(_this._form, _this.passengerModel);
-      }, 1000);
+      console.log("____mapModelToView", this.passengerModel, this._form);
+      this._updateForm(this._form, this.passengerModel);
     };
 
     return PassengerController;

@@ -8,10 +8,8 @@ define ->
         _form: undefined
 
         mapModelToView: () ->
-            console.log "____mapModelToView", @passengerModel, @form
-            
-            setTimeout(()=>
-                @_updateForm @_form, @passengerModel
-            , 1000)
+            console.log "____mapModelToView", @passengerModel, @_form
+
+            @_updateForm @_form, @passengerModel
             
             return

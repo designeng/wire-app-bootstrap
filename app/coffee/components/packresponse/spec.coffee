@@ -21,13 +21,16 @@ define ->
                 $ref: 'passengerView'
             _updateForm:
                 $ref: 'form.setValues'
-            passengerModel:
-                $ref: 'passengerModel'
-        ready:
-            'mapModelToView' : {}
+            # passengerModel:
+            #     $ref: 'passengerModel'
+        # ready:
+        #     'mapModelToView' : {}
 
-    passengerModel:
-        wire: "components/packresponse/model/modelSpec"
+    # passengerModel:
+    #     wire: "components/packresponse/model/modelSpec"
+
+    passengerCollection:
+        wire: "components/packresponse/collection/collectionSpec"
 
     # can be implemented as html form with disabled fields  
     passengerView:
@@ -38,11 +41,11 @@ define ->
             at: {$ref: 'packresponsePage'}
         bind:
             to:
-                $ref: 'passengerModel'
+                $ref: 'passengerCollection'
             bindings:
                 firstName       : '.firstName'
                 lastName        : '.lastName'
-                # birthDate       : '.birthDate'
+                birthDate       : '.birthDate'
                 # citizenship     : '.citizenship'
                 # document        : '.document'
                 # expirationDate  : '.expirationDate'
