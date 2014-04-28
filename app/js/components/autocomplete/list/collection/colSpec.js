@@ -2,11 +2,22 @@ define(function() {
   return {
     $plugins: ['wire/debug', 'cola'],
     $exports: {
-      $ref: 'listCollection'
+      $ref: 'collection'
     },
-    listCollection: {
+    identifyByPort: {
       create: {
-        module: 'cola/Collection'
+        module: 'cola/identifier/property',
+        args: ['port']
+      }
+    },
+    collection: {
+      create: {
+        module: 'cola/Collection',
+        args: {
+          identifier: {
+            $ref: 'identifyByPort'
+          }
+        }
       },
       ready: {
         "addSource": {

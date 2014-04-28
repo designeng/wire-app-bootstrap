@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(function() {
   var AutoCompleteController;
   return AutoCompleteController = (function() {
     function AutoCompleteController() {}
@@ -7,13 +7,18 @@ define(["jquery"], function($) {
 
     AutoCompleteController.prototype.list = void 0;
 
+    AutoCompleteController.prototype.listCollection = void 0;
+
+    AutoCompleteController.prototype.curId = 5;
+
     AutoCompleteController.prototype.onItemClick = function(item) {
       return console.log("____click");
     };
 
-    AutoCompleteController.prototype.bindKeyUp = function() {
-      return $(this.input).keyup(function(e) {
-        return console.log(e.target.value);
+    AutoCompleteController.prototype.onTextInputKeyUp = function(e) {
+      console.log("_____ONKEYUP", this.listCollection.adapters[0]._index);
+      return this.listCollection.add({
+        port: e.target.value
       });
     };
 

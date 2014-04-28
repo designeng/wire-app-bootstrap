@@ -18,10 +18,10 @@ define ->
         properties:
             input: {$ref: 'input'}
             list: {$ref: 'list'}
-        ready:
-            "bindKeyUp": {}
+            listCollection: {$ref: 'listCollection'}
+        ready: {}
         connect:
-            'testsCollection.onEdit': 'onItemClick'
+            'listCollection.onEdit': 'onItemClick'
 
     # wrapper for input and list
     autocompleteFormView:
@@ -61,4 +61,6 @@ define ->
                 module: "css!components/autocomplete/input/style.css"
         insert:
             at: {$ref: 'dom.first!.inputWrapper', at: {$ref: 'autocompleteFormView'}}
+        on:
+            'keyup': 'autocompleteFormController.onTextInputKeyUp'
 

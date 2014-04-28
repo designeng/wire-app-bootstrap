@@ -5,11 +5,17 @@ define ->
     ]
 
     $exports:
-        $ref: 'listCollection'
+        $ref: 'collection'
 
-	listCollection:
+    identifyByPort:
+        create:
+            module: 'cola/identifier/property'
+            args: [ 'port' ]
+
+	collection:
         create:
             module: 'cola/Collection'
+            args: {identifier: { $ref: 'identifyByPort' }}
         ready:
             "addSource": {$ref: "source"}
 

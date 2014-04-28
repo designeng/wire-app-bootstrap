@@ -63,6 +63,7 @@ module.exports = (grunt) ->
                     middleware: (connect, options) ->
                         return [
                             connectMW.stubService
+                            connectMW.packResponse
                             connectMW.folderMount(connect, options.base)
                         ]
 

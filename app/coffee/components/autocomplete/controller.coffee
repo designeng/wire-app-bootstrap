@@ -1,4 +1,4 @@
-define ["jquery"], ($) ->
+define ->
     class AutoCompleteController
 
         # @injected
@@ -7,9 +7,16 @@ define ["jquery"], ($) ->
         # @injected
         list: undefined
 
+        # @injected
+        listCollection: undefined
+
+        curId: 5
+
         onItemClick: (item) ->
             console.log "____click"
 
-        bindKeyUp: ->
-            $(@input).keyup (e) ->
-                console.log e.target.value
+
+        onTextInputKeyUp: (e) ->
+            console.log "_____ONKEYUP", @listCollection.adapters[0]._index
+
+            @listCollection.add {port: e.target.value}

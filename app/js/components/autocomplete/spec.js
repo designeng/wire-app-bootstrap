@@ -12,13 +12,14 @@ define(function() {
         },
         list: {
           $ref: 'list'
+        },
+        listCollection: {
+          $ref: 'listCollection'
         }
       },
-      ready: {
-        "bindKeyUp": {}
-      },
+      ready: {},
       connect: {
-        'testsCollection.onEdit': 'onItemClick'
+        'listCollection.onEdit': 'onItemClick'
       }
     },
     autocompleteFormView: {
@@ -84,6 +85,9 @@ define(function() {
             $ref: 'autocompleteFormView'
           }
         }
+      },
+      on: {
+        'keyup': 'autocompleteFormController.onTextInputKeyUp'
       }
     }
   };

@@ -1,4 +1,5 @@
 path = require "path"
+grunt = require "grunt"
 
 ConnectMW = {}
 
@@ -24,5 +25,22 @@ ConnectMW.stubService = (req, res, next) ->
 
     else
         next()
+
+
+
+# package response
+ConnectMW.packResponse = (req, res, next) ->
+    if (req.url).match new RegExp("service/mock/pack/response")
+
+        response = grunt.file.readJSON __dirname + "/../response/packresponse.json"
+
+        res.setHeader "Content-Type", "application/json; charset=utf-8"
+        res.write JSON.stringify response
+        res.end()
+
+    else
+        next()
+
+
 
 module.exports = ConnectMW
