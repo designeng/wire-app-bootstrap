@@ -38,7 +38,7 @@ define ->
             template:
                 module: "text!components/packresponse/template.html"
         insert:
-            at: {$ref: 'packresponsePage'}
+            at: {$ref: 'slot'}
         bind:
             to:
                 $ref: 'passengerCollection'

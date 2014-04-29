@@ -32,7 +32,7 @@ define ->
                 module: "css!components/autocomplete/styles.css"
 
         insert:
-            at: {$ref: 'searchPage'}
+            at: {$ref: 'slot'}
 
     list:
         render:

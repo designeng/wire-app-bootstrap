@@ -1,15 +1,22 @@
-# require [
-#     "wire"
-#     "wire!bootstrapSpec"
-#     "routerMainSpec"
-# ], (wire, bootstrapCTX, routerMainSpec) ->
+# it works with contextRouter
 
-#     bootstrapCTX.wire(
-#         routerMainSpec
-#     ).then (resultCTX) ->
-#         console.log "resultCTX::::", resultCTX
+require [
+    "wire"
+    "hasher"
+    "wire!bootstrapSpec"
+    "routerMainSpec"
+], (wire, hasher, bootstrapCTX, routerMainSpec) ->
 
+    bootstrapCTX.wire(
+        routerMainSpec
+    ).then (resultCTX) ->
 
+        hasher.prependHash = ""
+        hasher.init()
+
+        console.log "resultCTX::::", resultCTX
+
+# it works with specRouter
 
 # components/testroutecomp/childSpec
 # require [
@@ -25,15 +32,18 @@
 
 #         hasher.init()
 
-require [
-    "wire"
-    "wire!components/navtabs/navtabsSpec"
-    "hasher"
-], (wire, navtabsSpec, hasher) ->
 
-    navtabsSpec.wire(
+# it works with specRouter
+
+# require [
+#     "wire"
+#     "wire!components/navtabs/navtabsSpec"
+#     "hasher"
+# ], (wire, navtabsSpec, hasher) ->
+
+#     navtabsSpec.wire(
         
-    ).then (resultCTX) ->
-        console.log "resultCTX::::", resultCTX
+#     ).then (resultCTX) ->
+#         console.log "resultCTX::::", resultCTX
 
-        hasher.init()
+#         hasher.init()

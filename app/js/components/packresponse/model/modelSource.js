@@ -3,7 +3,7 @@ define(['cola/adapter/Object', 'rest', 'rest/interceptor/mime', 'rest/intercepto
   serviceDefered = When.defer();
   client = rest.chain(mime).chain(entity);
   client({
-    path: '/service/mock/pack/response'
+    path: '/service/json/pack/response'
   }).then(function(response) {
     var source;
     console.log("___response.data.pack.persons[0]", response.data.pack.persons[0]);

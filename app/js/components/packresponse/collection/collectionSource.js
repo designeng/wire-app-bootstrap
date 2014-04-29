@@ -3,7 +3,7 @@ define(['cola/adapter/Array', 'rest', 'rest/interceptor/mime', 'rest/interceptor
   serviceDefered = When.defer();
   client = rest.chain(mime).chain(entity);
   client({
-    path: '/service/mock/pack/response'
+    path: '/service/json/pack/response'
   }).then(function(response) {
     var source;
     source = new ArrayAdapter(response.data.pack.persons);

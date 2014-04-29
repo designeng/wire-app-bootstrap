@@ -29,7 +29,7 @@ define(function() {
       },
       insert: {
         at: {
-          $ref: 'packresponsePage'
+          $ref: 'slot'
         }
       },
       bind: {

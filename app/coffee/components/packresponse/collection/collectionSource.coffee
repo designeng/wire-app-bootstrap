@@ -10,7 +10,7 @@ define [
 
     client = rest.chain(mime).chain(entity)
 
-    client({path: '/service/mock/pack/response'}).then(
+    client({path: '/service/json/pack/response'}).then(
         (response) ->
             source = new ArrayAdapter(response.data.pack.persons)
             serviceDefered.resolve source

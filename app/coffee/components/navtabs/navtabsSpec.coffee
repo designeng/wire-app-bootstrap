@@ -17,6 +17,7 @@ define ->
             template: {$ref: 'navtabsView'}
             search: { $ref: 'dom.first!.search', at: 'navtabsView' }
             basket: { $ref: 'dom.first!.basket', at: 'navtabsView' }
+            
             searchPanel: { $ref: 'dom.first!.searchPanel', at: 'navtabsView' }
             basketPanel: { $ref: 'dom.first!.basketPanel', at: 'navtabsView' }
             

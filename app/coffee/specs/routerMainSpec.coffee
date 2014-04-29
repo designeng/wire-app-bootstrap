@@ -2,10 +2,17 @@
 define
     $plugins: [
         "wire/debug"
-        "core/plugin/bbRouter"
+        "wire/dom"
+        # "core/plugin/bbRouter"
+        "core/plugin/contextRouter"
     ]
 
     appRouter:
-        bbRouter: 
+        contextRouter: 
             routes:
-                "#one"  :   "components/testroutecomp/childSpec"
+                "autocomplete"  :   
+                    spec: "components/autocomplete/spec"
+                    slot: {$ref: "dom.first!#page"}
+                "packresponse"  :   
+                    spec: "components/packresponse/spec"
+                    slot: {$ref: "dom.first!#page"}

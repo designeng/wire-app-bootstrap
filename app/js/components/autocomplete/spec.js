@@ -33,7 +33,7 @@ define(function() {
       },
       insert: {
         at: {
-          $ref: 'searchPage'
+          $ref: 'slot'
         }
       }
     },
