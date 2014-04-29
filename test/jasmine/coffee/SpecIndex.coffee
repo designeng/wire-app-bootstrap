@@ -4,6 +4,6 @@ define ->
         # WORKS, UNCOMMENT
         # "core/plugin/serviseHub"
         
-        # "core/plugin/serviseHubClientIntegration"
+        "core/plugin/serviseHubClientIntegration"
         "core/router/specRouter"
     ]

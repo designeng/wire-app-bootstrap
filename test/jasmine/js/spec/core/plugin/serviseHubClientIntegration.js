@@ -11,7 +11,7 @@ define(["wire"], function(wire) {
 
       ServiseHubController.prototype.sendRequest = function(req) {
         var _this = this;
-        return this.client("/service/stub").then(function(response) {
+        return this.client("/service/autocomplete").then(function(response) {
           return _this.setCurrent(response);
         });
       };
@@ -19,7 +19,7 @@ define(["wire"], function(wire) {
       ServiseHubController.prototype.sendRequestWithData = function(serviceName, data) {
         var _this = this;
         return this.client({
-          path: "/service/stub",
+          path: "/service/autocomplete",
           params: data
         }).then(function(response) {
           return _this.setCurrent(response);

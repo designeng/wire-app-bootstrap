@@ -14,11 +14,11 @@ define [
             services: undefined
 
             sendRequest: (req) ->
-                @client("/service/stub").then (response) =>
+                @client("/service/autocomplete").then (response) =>
                     @setCurrent response
 
             sendRequestWithData: (serviceName, data) ->
-                @client({path:"/service/stub", params: data}).then (response) =>
+                @client({path:"/service/autocomplete", params: data}).then (response) =>
                     @setCurrent response
 
             getService: (name) ->
