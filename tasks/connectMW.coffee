@@ -9,7 +9,7 @@ ConnectMW.folderMount = (connect, point) ->
 
 # "service/stub"
 ConnectMW.stubService = (req, res, next) ->
-    if (req.url).match new RegExp("service/autocomplete")
+    if ((req.url).match new RegExp("service/autocomplete")) or ((req.url).match new RegExp("service/stub"))
 
         airports = ["Moscow", "Paris", "Tokio", "Rome", "London" ]
         id = 0
