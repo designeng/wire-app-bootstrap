@@ -1,4 +1,4 @@
 define(function() {
   var specs;
-  return specs = ["core/plugin/serviseHubClientIntegration", "core/router/specRouter"];
+  return specs = ["core/plugin/serviceHubClientIntegration", "core/router/specRouter"];
 });

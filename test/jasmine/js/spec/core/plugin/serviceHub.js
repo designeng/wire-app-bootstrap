@@ -1,27 +1,27 @@
 define(["wire"], function(wire) {
-  var sendRequestSpy, serviseHubSpec;
+  var sendRequestSpy, serviceHubSpec;
   sendRequestSpy = jasmine.createSpy('sendRequest');
-  define('serviseHubController', function() {
-    var ServiseHubController;
-    return ServiseHubController = (function() {
-      function ServiseHubController() {}
+  define('serviceHubController', function() {
+    var serviceHubController;
+    return serviceHubController = (function() {
+      function serviceHubController() {}
 
-      ServiseHubController.prototype.services = void 0;
+      serviceHubController.prototype.services = void 0;
 
-      ServiseHubController.prototype.sendRequest = function(req) {
+      serviceHubController.prototype.sendRequest = function(req) {
         return sendRequestSpy(req);
       };
 
-      ServiseHubController.prototype.getService = function(name) {
+      serviceHubController.prototype.getService = function(name) {
         return this.services[name];
       };
 
-      return ServiseHubController;
+      return serviceHubController;
 
     })();
   });
-  serviseHubSpec = {
-    $plugins: ["rest/wire", "core/plugin/serviseHub"],
+  serviceHubSpec = {
+    $plugins: ["rest/wire", "core/plugin/serviceHub"],
     client: {
       rest: [
         {
@@ -32,7 +32,7 @@ define(["wire"], function(wire) {
       ]
     },
     controller: {
-      create: "serviseHubController",
+      create: "serviceHubController",
       ready: {
         "sendRequest": {
           service: "stubService",
@@ -44,10 +44,10 @@ define(["wire"], function(wire) {
       bindToService: ["stubService"]
     }
   };
-  return describe("serviseHub plugin integration", function() {
+  return describe("serviceHub plugin integration", function() {
     beforeEach(function(done) {
       var _this = this;
-      return wire(serviseHubSpec).then(function(ctx) {
+      return wire(serviceHubSpec).then(function(ctx) {
         _this.ctx = ctx;
         return done();
       }).otherwise(function(err) {

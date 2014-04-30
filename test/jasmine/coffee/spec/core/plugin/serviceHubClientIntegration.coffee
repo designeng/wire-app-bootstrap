@@ -1,30 +1,30 @@
-# serviseHub
+# serviceHub
 define [
     "wire"
     "meld"
 ], (wire, meld) ->
 
     # controller
-    define 'serviseHubController', () ->
-        class ServiseHubController
+    define 'serviceHubController', () ->
+        class serviceHubController
 
             # {Rest.Client}
-            # @injected by serviseHub plugin
+            # @injected by serviceHub plugin
             client: undefined
 
             # {Object}
-            # @injected by serviseHub plugin 
+            # @injected by serviceHub plugin 
             services: undefined
 
             # @param {String} serviceName
             # @param {Object} data
             # @param {String} method
             # {Function}
-            # @injected by serviseHub plugin
+            # @injected by serviceHub plugin
             sendRequest: undefined
 
             # {Function}
-            # @injected by serviseHub plugin
+            # @injected by serviceHub plugin
             sendRequestErrback: undefined
 
             setCurrent: (entity) ->
@@ -38,13 +38,13 @@ define [
                     @setCurrent(resultEntity)
 
     # wire spec
-    serviseHubSpec = 
+    serviceHubSpec = 
         $plugins:[
-            "core/plugin/serviseHub"
+            "core/plugin/serviceHub"
         ]
 
         controller:
-            create: "serviseHubController"
+            create: "serviceHubController"
 
             ready:
                 "onReady": {}
@@ -55,10 +55,10 @@ define [
             ]
 
     # jasmine specifications
-    describe "serviseHub integration with rest client", ->
+    describe "serviceHub integration with rest client", ->
 
         beforeEach (done) ->
-            wire(serviseHubSpec).then (@ctx) =>
+            wire(serviceHubSpec).then (@ctx) =>
                 done()
             .otherwise (err) ->
                 console.log "ERROR", err

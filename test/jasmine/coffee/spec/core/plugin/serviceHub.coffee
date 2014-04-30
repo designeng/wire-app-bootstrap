@@ -1,4 +1,4 @@
-# serviseHub
+# serviceHub
 define [
     "wire"
 ], (wire) ->
@@ -6,10 +6,10 @@ define [
     # controller
     sendRequestSpy = jasmine.createSpy('sendRequest')
 
-    define 'serviseHubController', () ->
-        class ServiseHubController
+    define 'serviceHubController', () ->
+        class serviceHubController
 
-            # @injected (serviseHub plugin) 
+            # @injected (serviceHub plugin) 
             services: undefined
 
             sendRequest: (req) ->
@@ -19,10 +19,10 @@ define [
                 return @services[name]
 
     # spec
-    serviseHubSpec = 
+    serviceHubSpec = 
         $plugins:[
             "rest/wire"
-            "core/plugin/serviseHub"
+            "core/plugin/serviceHub"
         ]
 
         client:
@@ -33,7 +33,7 @@ define [
             ]
 
         controller:
-            create: "serviseHubController"
+            create: "serviceHubController"
 
             ready:
                 "sendRequest": 
@@ -45,10 +45,10 @@ define [
                 "stubService"
             ]
 
-    describe "serviseHub plugin integration", ->
+    describe "serviceHub plugin integration", ->
 
         beforeEach (done) ->
-            wire(serviseHubSpec).then (@ctx) =>           
+            wire(serviceHubSpec).then (@ctx) =>           
                 done()
             .otherwise (err) ->
                 console.log "ERROR", err
