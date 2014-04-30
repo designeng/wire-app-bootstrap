@@ -1,4 +1,4 @@
-define(["underscore", "rest", "rest/interceptor/mime", "rest/interceptor/entity", "core/servicehub/serviceMap"], function(_, rest, mime, entity, serviceMap) {
+define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor/entity", "core/servicehub/serviceMap"], function(_, When, rest, mime, entity, serviceMap) {
   return function(options) {
     var bindToServiceFacet, dafaultCallback, dafaultErrback, service;
     dafaultCallback = function(response) {
@@ -15,7 +15,7 @@ define(["underscore", "rest", "rest/interceptor/mime", "rest/interceptor/entity"
         target.services = {};
         target.client = rest.chain(mime).chain(entity);
         target["sendRequest"] = function(serviceName, data, method, callback, errback) {
-          var path;
+          var defered, path;
           if (this.services[serviceName]) {
             path = this.services[serviceName].path;
           } else {
@@ -28,11 +28,16 @@ define(["underscore", "rest", "rest/interceptor/mime", "rest/interceptor/entity"
           if (!path) {
             throw new Error("Path is not defined!");
           }
-          return this.client({
+          defered = When.defer();
+          this.client({
             path: path,
             data: data,
             method: method
-          }).then(callback, errback);
+          }).then(function(response) {
+            defered.resolve(response);
+            return callback.call(this, response);
+          }, errback);
+          return defered.promise;
         };
         _.bindAll(target, "sendRequest");
         _results = [];

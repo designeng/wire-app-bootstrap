@@ -1,10 +1,11 @@
 define [
     "underscore"
+    "when"
     "rest"
     "rest/interceptor/mime"
     "rest/interceptor/entity"
     "core/servicehub/serviceMap"
-], (_, rest, mime, entity, serviceMap) ->
+], (_, When, rest, mime, entity, serviceMap) ->
 
     return (options) ->
 
@@ -38,10 +39,15 @@ define [
                     if !path
                         throw new Error("Path is not defined!")
                     # all is fine
+
+                    defered = When.defer()
                     @client({ path: path, data: data, method: method}).then(
-                        callback,
-                        errback
+                        (response) ->
+                            defered.resolve(response)
+                            callback.call @, response
+                        , errback
                     )
+                    return defered.promise
 
                 _.bindAll target, "sendRequest"
 
