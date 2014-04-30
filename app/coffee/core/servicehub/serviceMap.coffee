@@ -1,4 +1,5 @@
 # serviceMap
+# TODO: method in properties?
 define ->
     serviceMap = 
         stubService:

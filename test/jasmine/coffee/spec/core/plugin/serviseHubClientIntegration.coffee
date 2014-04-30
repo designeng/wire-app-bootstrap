@@ -16,9 +16,16 @@ define [
             # @injected by serviseHub plugin 
             services: undefined
 
+            # @param {String} serviceName
+            # @param {Object} data
+            # @param {String} method
             # {Function}
             # @injected by serviseHub plugin
             sendRequest: undefined
+
+            # {Function}
+            # @injected by serviseHub plugin
+            sendRequestErrback: undefined
 
             setCurrent: (entity) ->
                 @current = entity
@@ -41,7 +48,7 @@ define [
 
             ready:
                 "onReady": {}
-                "sendRequest": ["stubService", {towns: ["Moscow", "Paris"]}, "GET"]
+                "sendRequest": ["stubService", {towns: ["Moscow", "Paris"]}]
 
             bindToService: [
                 "stubService"
@@ -64,6 +71,6 @@ define [
             expect(@ctx.controller.sendRequest).toBeDefined()
             done()
 
-        it "controller must have @current {Object} after sendRequest call", (done) ->
+        it "controller must have @current {Object} promise", (done) ->
             expect(@ctx.controller.getCurrent()).toBeObject()
             done()

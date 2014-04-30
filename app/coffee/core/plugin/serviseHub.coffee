@@ -9,14 +9,6 @@ define [
 
     return (options) ->
 
-        # blank function
-        dafaultCallback = (response) ->
-            console.log "DEFAULT RESPONSE", response
-
-        # default errback
-        dafaultErrback = (response) ->
-            console.error 'response error: ', response
-
         service = (facet, options, wire) ->
             target = facet.target
             services = facet.options
@@ -26,7 +18,10 @@ define [
                 target.client = rest.chain(mime)
                                     .chain(entity)
 
-                target["sendRequest"] = (serviceName, data, method, callback, errback) ->
+                target["sendRequestErrback"] = () ->
+                    console.error 'response error: ', response
+
+                target["sendRequest"] = (serviceName, data, method) ->
                     if @services[serviceName]
                         path = @services[serviceName].path
                     else
@@ -34,18 +29,16 @@ define [
 
                     method = method || "GET"
                     data = data || {}
-                    callback = callback || dafaultCallback
-                    errback = errback || dafaultErrback
-                    if !path
-                        throw new Error("Path is not defined!")
-                    # all is fine
 
+                    if !path
+                        throw new Error("Path is not defined in service '#{serviceName}'!")
+
+                    # all is fine
                     defered = When.defer()
                     @client({ path: path, data: data, method: method}).then(
                         (response) ->
                             defered.resolve(response)
-                            callback.call @, response
-                        , errback
+                        , target["sendRequestErrback"]
                     )
                     return defered.promise
 
@@ -67,4 +60,4 @@ define [
 
         facets: 
             bindToService: 
-                "ready": bindToServiceFacet
+                ready: bindToServiceFacet

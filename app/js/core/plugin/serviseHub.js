@@ -1,12 +1,6 @@
 define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor/entity", "core/servicehub/serviceMap"], function(_, When, rest, mime, entity, serviceMap) {
   return function(options) {
-    var bindToServiceFacet, dafaultCallback, dafaultErrback, service;
-    dafaultCallback = function(response) {
-      return console.log("DEFAULT RESPONSE", response);
-    };
-    dafaultErrback = function(response) {
-      return console.error('response error: ', response);
-    };
+    var bindToServiceFacet, service;
     service = function(facet, options, wire) {
       var serv, services, target, _i, _len, _results;
       target = facet.target;
@@ -14,7 +8,10 @@ define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor
       if (_.isArray(services)) {
         target.services = {};
         target.client = rest.chain(mime).chain(entity);
-        target["sendRequest"] = function(serviceName, data, method, callback, errback) {
+        target["sendRequestErrback"] = function() {
+          return console.error('response error: ', response);
+        };
+        target["sendRequest"] = function(serviceName, data, method) {
           var defered, path;
           if (this.services[serviceName]) {
             path = this.services[serviceName].path;
@@ -23,10 +20,8 @@ define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor
           }
           method = method || "GET";
           data = data || {};
-          callback = callback || dafaultCallback;
-          errback = errback || dafaultErrback;
           if (!path) {
-            throw new Error("Path is not defined!");
+            throw new Error("Path is not defined in service '" + serviceName + "'!");
           }
           defered = When.defer();
           this.client({
@@ -34,9 +29,8 @@ define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor
             data: data,
             method: method
           }).then(function(response) {
-            defered.resolve(response);
-            return callback.call(this, response);
-          }, errback);
+            return defered.resolve(response);
+          }, target["sendRequestErrback"]);
           return defered.promise;
         };
         _.bindAll(target, "sendRequest");
@@ -60,7 +54,7 @@ define(["underscore", "when", "rest", "rest/interceptor/mime", "rest/interceptor
     return {
       facets: {
         bindToService: {
-          "ready": bindToServiceFacet
+          ready: bindToServiceFacet
         }
       }
     };

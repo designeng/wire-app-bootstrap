@@ -11,6 +11,8 @@ define(["wire", "meld"], function(wire, meld) {
 
       ServiseHubController.prototype.sendRequest = void 0;
 
+      ServiseHubController.prototype.sendRequestErrback = void 0;
+
       ServiseHubController.prototype.setCurrent = function(entity) {
         return this.current = entity;
       };
@@ -39,7 +41,7 @@ define(["wire", "meld"], function(wire, meld) {
         "sendRequest": [
           "stubService", {
             towns: ["Moscow", "Paris"]
-          }, "GET"
+          }
         ]
       },
       bindToService: ["stubService"]
@@ -63,7 +65,7 @@ define(["wire", "meld"], function(wire, meld) {
       expect(this.ctx.controller.sendRequest).toBeDefined();
       return done();
     });
-    return it("controller must have @current {Object} after sendRequest call", function(done) {
+    return it("controller must have @current {Object} promise", function(done) {
       expect(this.ctx.controller.getCurrent()).toBeObject();
       return done();
     });
