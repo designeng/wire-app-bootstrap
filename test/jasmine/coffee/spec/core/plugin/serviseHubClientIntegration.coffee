@@ -30,13 +30,6 @@ define [
                 meld.after @, "sendRequest", (resultEntity) =>
                     @setCurrent(resultEntity)
 
-            noop: (response) ->
-                @setCurrent response
-                console.log "response:", response
-
-            errnoop: (error) ->
-                console.error "ERROR in response:", error
-
     # wire spec
     serviseHubSpec = 
         $plugins:[

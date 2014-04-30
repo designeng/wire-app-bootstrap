@@ -26,15 +26,6 @@ define(["wire", "meld"], function(wire, meld) {
         });
       };
 
-      ServiseHubController.prototype.noop = function(response) {
-        this.setCurrent(response);
-        return console.log("response:", response);
-      };
-
-      ServiseHubController.prototype.errnoop = function(error) {
-        return console.error("ERROR in response:", error);
-      };
-
       return ServiseHubController;
 
     })();
