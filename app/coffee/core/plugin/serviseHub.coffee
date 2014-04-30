@@ -1,16 +1,50 @@
 define [
     "underscore"
+    "rest"
+    "rest/interceptor/mime"
+    "rest/interceptor/entity"
     "core/servicehub/serviceMap"
-], (_, serviceMap) ->
+], (_, rest, mime, entity, serviceMap) ->
 
     return (options) ->
+
+        # blank function
+        dafaultCallback = (response) ->
+            console.log "DEFAULT RESPONSE", response
+
+        # default errback
+        dafaultErrback = (response) ->
+            console.error 'response error: ', response
 
         service = (facet, options, wire) ->
             target = facet.target
             services = facet.options
 
             if _.isArray services
-                target.services = {}
+                target.services = {}                
+                target.client = rest.chain(mime)
+                                    .chain(entity)
+
+                target["sendRequest"] = (serviceName, data, method, callback, errback) ->
+                    if @services[serviceName]
+                        path = @services[serviceName].path
+                    else
+                        throw new Error("Not defined service '#{serviceName}' in target services!")
+
+                    method = method || "GET"
+                    data = data || {}
+                    callback = callback || dafaultCallback
+                    errback = errback || dafaultErrback
+                    if !path
+                        throw new Error("Path is not defined!")
+                    # all is fine
+                    @client({ path: path, data: data, method: method}).then(
+                        callback,
+                        errback
+                    )
+
+                _.bindAll target, "sendRequest"
+
                 for serv in services
                     if serviceMap[serv]
                         target.services[serv] = serviceMap[serv]
@@ -27,4 +61,4 @@ define [
 
         facets: 
             bindToService: 
-                ready: bindToServiceFacet
+                "ready": bindToServiceFacet

@@ -21,8 +21,16 @@ define [
     # spec
     serviseHubSpec = 
         $plugins:[
+            "rest/wire"
             "core/plugin/serviseHub"
         ]
+
+        client:
+            rest: [
+                module: 'rest/interceptor/mime'
+                module: 'rest/interceptor/errorCode'
+                module: 'rest/interceptor/entity'
+            ]
 
         controller:
             create: "serviseHubController"

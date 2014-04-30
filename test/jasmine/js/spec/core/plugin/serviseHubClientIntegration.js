@@ -1,4 +1,4 @@
-define(["wire"], function(wire) {
+define(["wire", "meld"], function(wire, meld) {
   var serviseHubSpec;
   define('serviseHubController', function() {
     var ServiseHubController;
@@ -9,26 +9,7 @@ define(["wire"], function(wire) {
 
       ServiseHubController.prototype.services = void 0;
 
-      ServiseHubController.prototype.sendRequest = function(req) {
-        var _this = this;
-        return this.client("/service/autocomplete").then(function(response) {
-          return _this.setCurrent(response);
-        });
-      };
-
-      ServiseHubController.prototype.sendRequestWithData = function(serviceName, data) {
-        var _this = this;
-        return this.client({
-          path: "/service/autocomplete",
-          params: data
-        }).then(function(response) {
-          return _this.setCurrent(response);
-        });
-      };
-
-      ServiseHubController.prototype.getService = function(name) {
-        return this.services[name];
-      };
+      ServiseHubController.prototype.sendRequest = void 0;
 
       ServiseHubController.prototype.setCurrent = function(entity) {
         return this.current = entity;
@@ -38,35 +19,37 @@ define(["wire"], function(wire) {
         return this.current;
       };
 
+      ServiseHubController.prototype.onReady = function() {
+        var _this = this;
+        return meld.after(this, "sendRequest", function(resultEntity) {
+          return _this.setCurrent(resultEntity);
+        });
+      };
+
+      ServiseHubController.prototype.noop = function(response) {
+        this.setCurrent(response);
+        return console.log("response:", response);
+      };
+
+      ServiseHubController.prototype.errnoop = function(error) {
+        return console.error("ERROR in response:", error);
+      };
+
       return ServiseHubController;
 
     })();
   });
   serviseHubSpec = {
-    $plugins: ["rest/wire", "core/plugin/serviseHub"],
-    client: {
-      rest: [
-        {
-          module: 'rest/interceptor/mime',
-          module: 'rest/interceptor/errorCode',
-          module: 'rest/interceptor/entity'
-        }
-      ]
-    },
+    $plugins: ["core/plugin/serviseHub"],
     controller: {
       create: "serviseHubController",
       ready: {
-        "sendRequest": {
-          service: "stubService",
-          data: {
+        "onReady": {},
+        "sendRequest": [
+          "stubService", {
             towns: ["Moscow", "Paris"]
-          }
-        }
-      },
-      properties: {
-        client: {
-          $ref: 'client'
-        }
+          }, "GET"
+        ]
       },
       bindToService: ["stubService"]
     }
@@ -85,17 +68,12 @@ define(["wire"], function(wire) {
       expect(this.ctx.controller.client).toBeDefined();
       return done();
     });
-    it("controller sendRequest must return sensible object in response", function(done) {
-      var parsed;
-      parsed = JSON.parse(this.ctx.controller.getCurrent());
-      expect(parsed).toBeObject();
+    it("controller has sendRequest function", function(done) {
+      expect(this.ctx.controller.sendRequest).toBeDefined();
       return done();
     });
-    return it("controller client call with data", function(done) {
-      this.ctx.controller.sendRequestWithData("stubService", {
-        towns: ["Moscow", "Paris"]
-      });
-      expect(this.ctx.controller.client).toBeDefined();
+    return it("controller must have @current {Object} after sendRequest call", function(done) {
+      expect(this.ctx.controller.getCurrent()).toBeObject();
       return done();
     });
   });

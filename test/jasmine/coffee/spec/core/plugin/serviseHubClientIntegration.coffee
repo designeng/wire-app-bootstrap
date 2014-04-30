@@ -1,28 +1,24 @@
 # serviseHub
 define [
     "wire"
-], (wire) ->
+    "meld"
+], (wire, meld) ->
 
     # controller
     define 'serviseHubController', () ->
         class ServiseHubController
 
-            # @injected
+            # {Rest.Client}
+            # @injected by serviseHub plugin
             client: undefined
 
-            # @injected (serviseHub plugin)
+            # {Object}
+            # @injected by serviseHub plugin 
             services: undefined
 
-            sendRequest: (req) ->
-                @client("/service/autocomplete").then (response) =>
-                    @setCurrent response
-
-            sendRequestWithData: (serviceName, data) ->
-                @client({path:"/service/autocomplete", params: data}).then (response) =>
-                    @setCurrent response
-
-            getService: (name) ->
-                return @services[name]
+            # {Function}
+            # @injected by serviseHub plugin
+            sendRequest: undefined
 
             setCurrent: (entity) ->
                 @current = entity
@@ -30,40 +26,39 @@ define [
             getCurrent: ->
                 @current
 
-    # spec
+            onReady: ->
+                meld.after @, "sendRequest", (resultEntity) =>
+                    @setCurrent(resultEntity)
+
+            noop: (response) ->
+                @setCurrent response
+                console.log "response:", response
+
+            errnoop: (error) ->
+                console.error "ERROR in response:", error
+
+    # wire spec
     serviseHubSpec = 
         $plugins:[
-            "rest/wire"
             "core/plugin/serviseHub"
         ]
-
-        client:
-            rest: [
-                module: 'rest/interceptor/mime'
-                module: 'rest/interceptor/errorCode'
-                module: 'rest/interceptor/entity'
-            ]
 
         controller:
             create: "serviseHubController"
 
             ready:
-                "sendRequest": 
-                    service: "stubService"
-                    data:
-                        towns: ["Moscow", "Paris"]
-
-            properties:
-                client: {$ref: 'client'}
+                "onReady": {}
+                "sendRequest": ["stubService", {towns: ["Moscow", "Paris"]}, "GET"]
 
             bindToService: [
                 "stubService"
             ]
 
+    # jasmine specifications
     describe "serviseHub integration with rest client", ->
 
         beforeEach (done) ->
-            wire(serviseHubSpec).then (@ctx) =>   
+            wire(serviseHubSpec).then (@ctx) =>
                 done()
             .otherwise (err) ->
                 console.log "ERROR", err
@@ -72,12 +67,10 @@ define [
             expect(@ctx.controller.client).toBeDefined()
             done()
 
-        it "controller sendRequest must return sensible object in response", (done) ->
-            parsed = JSON.parse @ctx.controller.getCurrent()
-            expect(parsed).toBeObject()
+        it "controller has sendRequest function", (done) ->
+            expect(@ctx.controller.sendRequest).toBeDefined()
             done()
 
-        it "controller client call with data", (done) ->
-            @ctx.controller.sendRequestWithData("stubService", {towns: ["Moscow", "Paris"]})
-            expect(@ctx.controller.client).toBeDefined()
+        it "controller must have @current {Object} after sendRequest call", (done) ->
+            expect(@ctx.controller.getCurrent()).toBeObject()
             done()
