@@ -3,7 +3,6 @@ define
     $plugins: [
         "wire/debug"
         "wire/dom"
-        # "core/plugin/bbRouter"
         "core/plugin/contextRouter"
     ]
 

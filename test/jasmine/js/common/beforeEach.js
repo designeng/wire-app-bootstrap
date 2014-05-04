@@ -23,6 +23,24 @@ define(["marionette", "underscore"], function(Marionette, _) {
             };
           }
         };
+      },
+      toBeArray: function() {
+        return {
+          compare: function(actual) {
+            return {
+              pass: _.isArray(actual)
+            };
+          }
+        };
+      },
+      toBeInArray: function(array) {
+        return {
+          compare: function(actual) {
+            return {
+              pass: _.indexOf(array, actual)
+            };
+          }
+        };
       }
     });
   });

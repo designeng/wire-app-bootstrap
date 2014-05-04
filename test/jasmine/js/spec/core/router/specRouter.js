@@ -63,10 +63,6 @@ define(["wire", "underscore", "hasher"], function(wire, _, hasher) {
         return console.log("ERROR", err);
       });
     });
-    it("controller", function(done) {
-      expect(this.ctx.controller).toBeDefined();
-      return done();
-    });
     it("controller has router property", function(done) {
       expect(this.ctx.controller.router).toBeDefined();
       return done();

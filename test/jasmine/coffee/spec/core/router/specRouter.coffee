@@ -58,10 +58,6 @@ define [
             .otherwise (err) ->
                 console.log "ERROR", err
 
-        it "controller", (done) ->
-            expect(@ctx.controller).toBeDefined()
-            done()
-
         it "controller has router property", (done) ->
             expect(@ctx.controller.router).toBeDefined()
             done()

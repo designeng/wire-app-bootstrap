@@ -1,4 +1,4 @@
 define(function() {
   var specs;
-  return specs = ["core/plugin/serviceHubClientIntegration", "core/router/specRouter"];
+  return specs = ["core/router/contextRouter"];
 });

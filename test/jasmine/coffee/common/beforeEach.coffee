@@ -1,6 +1,7 @@
 define [
     "marionette"
     "underscore"
+    # "jasmine-jquery"
 ], (Marionette, _) ->
 
     beforeEach -> 
@@ -25,5 +26,20 @@ define [
                             pass: _.isObject(actual)
                         }
                 }
+            toBeArray: () ->
+                return {
+                    compare: (actual) ->
+                        return  {
+                            pass: _.isArray(actual)
+                        }
+                }
+            toBeInArray: (array) ->
+                return {
+                    compare: (actual) ->
+                        return  {
+                            pass: _.indexOf(array, actual)
+                        }
+                }
+
 
 
