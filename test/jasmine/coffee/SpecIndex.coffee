@@ -6,6 +6,6 @@ define ->
         
         # "core/plugin/serviceHubClientIntegration"
         
-        # "core/router/specRouter"
+        "core/router/specRouter"
         "core/router/contextRouter"
     ]

@@ -6,16 +6,16 @@ define [
     'when'
 ], (ArrayAdapter, rest, mime, entity, When) ->
 
-    serviceDefered = When.defer()
+    serviceDeferred = When.defer()
 
     client = rest.chain(mime).chain(entity)
 
     client({path: '/service/autocomplete'}).then(
         (response) ->
             source = new ArrayAdapter(response.airports)
-            serviceDefered.resolve source
+            serviceDeferred.resolve source
         , (error) ->
             console.log "SERVICE ERROR:", error
     )
 
-    return serviceDefered.promise
+    return serviceDeferred.promise
