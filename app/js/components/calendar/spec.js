@@ -1,12 +1,23 @@
 define(function() {
   return {
-    $plugins: ['wire/on', 'wire/dom', 'wire/dom/render', 'cola'],
+    $plugins: ['wire/on', 'wire/dom', 'wire/dom/render', 'wire/aop', 'cola'],
     $exports: {
-      $ref: 'calendarController',
+      $ref: 'controller',
       $ref: 'calendarView'
     },
-    calendarController: {
-      create: "components/calendar/controller"
+    controller: {
+      create: "components/calendar/controller",
+      properties: {
+        collection: {
+          $ref: 'monthCollection'
+        },
+        calendarView: {
+          $ref: 'calendarView'
+        }
+      },
+      ready: {
+        "onReady": {}
+      }
     },
     source: {
       create: "components/calendar/monthCollectionSource"
@@ -19,6 +30,9 @@ define(function() {
         "addSource": {
           $ref: "source"
         }
+      },
+      after: {
+        addSource: "controller.onChange"
       }
     },
     calendarView: {

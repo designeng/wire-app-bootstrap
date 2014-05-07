@@ -20,7 +20,13 @@ define [
 
     i = 1
     while i <= daysInMonth
-        days.push {id: moment("#{year}-#{month}-#{i}", "YYYY-MM-D").unix(), day: i}
+        
+        if (days.length % 7)
+            end = " weekend"
+        else
+            end = ""
+
+        days.push {id: moment("#{year}-#{month}-#{i}", "YYYY-MM-D").unix() + end, day: i}
         i++
 
     source = new ArrayAdapter(days)

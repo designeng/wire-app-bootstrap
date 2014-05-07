@@ -6,15 +6,21 @@ define ->
         'wire/on'
         'wire/dom'
         'wire/dom/render'
+        'wire/aop'
         'cola'
     ]
 
     $exports:
-        $ref: 'calendarController'
+        $ref: 'controller'
         $ref: 'calendarView'
 
-    calendarController:
+    controller:
         create: "components/calendar/controller"
+        properties:
+            collection: {$ref: 'monthCollection'}
+            calendarView: {$ref: 'calendarView'}
+        ready:
+            "onReady": {}
 
     source:
         create: "components/calendar/monthCollectionSource"
@@ -24,6 +30,8 @@ define ->
             module: 'cola/Collection'
         ready:
             "addSource": {$ref: "source"}
+        after:
+            addSource: "controller.onChange"
 
     calendarView:
         render:
