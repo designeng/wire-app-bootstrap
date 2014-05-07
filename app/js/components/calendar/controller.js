@@ -7,10 +7,6 @@ define(["moment", "jquery"], function(moment, $) {
       return console.log("___@collection", this.collection);
     };
 
-    CalendarController.prototype.afterUpdate = function() {
-      return console.log("____afterUpdate");
-    };
-
     CalendarController.prototype.afterAdd = function() {
       var _this = this;
       return setTimeout(function() {

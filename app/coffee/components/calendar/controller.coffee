@@ -11,9 +11,6 @@ define [
 
             console.log "___@collection", @collection
 
-        afterUpdate: ->
-            console.log "____afterUpdate"
-
         afterAdd: ->
             setTimeout(()=>
                 grid = $(@calendarView).find("ul.calendarGrid")
