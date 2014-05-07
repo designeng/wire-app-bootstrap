@@ -1,13 +1,22 @@
 define [
     "underscore"
     "when"
+    "meld"
     "rest"
     "rest/interceptor/mime"
     "rest/interceptor/entity"
     "core/servicehub/serviceMap"
-], (_, When, rest, mime, entity, serviceMap) ->
+], (_, When, meld, rest, mime, entity, serviceMap) ->
 
     return (options) ->
+
+        removers = []
+
+        afterSendRequestAspect = (target) ->
+            if target["afterSendRequest"]
+                removers.push(meld.after target, "sendRequest", (resultEntityPromise) =>
+                    When(resultEntityPromise).then (resultEntity) ->
+                        target["afterSendRequest"].call(target, resultEntity))
 
         service = (facet, options, wire) ->
             target = facet.target
@@ -15,8 +24,8 @@ define [
 
             if _.isArray services
                 target.services = {}                
-                target.client = rest.chain(mime)
-                                    .chain(entity)
+                target.client = rest.wrap(mime)
+                                    .wrap(entity)
 
                 target["sendRequestErrback"] = () ->
                     console.error 'response error: ', response
@@ -42,6 +51,8 @@ define [
                     )
                     return defered.promise
 
+                afterSendRequestAspect(target)
+
                 _.bindAll target, "sendRequest"
 
                 for serv in services
@@ -61,3 +72,6 @@ define [
         facets: 
             bindToService: 
                 ready: bindToServiceFacet
+                destroy: (resolver, proxy, wire) ->
+                    for remover in removers
+                        remover.remove()

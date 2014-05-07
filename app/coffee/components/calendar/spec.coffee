@@ -32,7 +32,7 @@ define ->
             css:
                 module: "css!components/calendar/styles.css"
         insert:
-            at: {$ref: 'calendarPage'}
+            at: {$ref: 'slot'}
 
     calendarGrid:
         render:

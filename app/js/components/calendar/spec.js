@@ -32,7 +32,7 @@ define(function() {
       },
       insert: {
         at: {
-          $ref: 'calendarPage'
+          $ref: 'slot'
         }
       }
     },

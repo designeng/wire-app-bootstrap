@@ -15,3 +15,6 @@ define
                 "packresponse"  :   
                     spec: "components/packresponse/spec"
                     slot: {$ref: "dom.first!#page"}
+                "calendar"  :  
+                    spec: "components/calendar/spec"
+                    slot: {$ref: "dom.first!#page"}
