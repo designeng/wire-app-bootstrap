@@ -7,9 +7,21 @@ define [
     # it must be changed on not current month
     num = moment().startOf('month').day()
     # need to add blank tags
-    @blankCount = num - 1
+    blankCount = num - 1
 
-    days = [{id: "0", day: "one"}, {id: "1", day: "two"}]
+    daysInMonth = moment().daysInMonth()
+    year = moment().format("YYYY")
+    month = moment().format("MM")
+
+    days = []
+    while blankCount
+        days.push {id: -blankCount, day: "-"}
+        blankCount--
+
+    i = 1
+    while i <= daysInMonth
+        days.push {id: moment("#{year}-#{month}-#{i}", "YYYY-MM-D").unix(), day: i}
+        i++
 
     source = new ArrayAdapter(days)
 
