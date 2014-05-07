@@ -6,9 +6,6 @@ define [
     class CalendarController
 
         onReady: ->
-            # @collection.add {id:"test", day:"newDay"}
-            # @collection.collect()
-
             console.log "___@collection", @collection
 
         afterAdd: ->
