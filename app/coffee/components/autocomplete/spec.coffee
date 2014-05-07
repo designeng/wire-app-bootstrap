@@ -51,7 +51,7 @@ define ->
                 port: '.port'
 
     listCollection:
-        wire: "components/autocomplete/list/collection/colSpec"
+        wire: "components/autocomplete/list/collection/spec"
 
     input: 
         render:
